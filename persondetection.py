@@ -58,10 +58,10 @@ class DetectorAPI:
         self.default_graph.close()
 
 if __name__ == "__main__":
-    model_path = 'frozen graph path'
+    model_path = '/media/hriday/BackUp/Person Detection V 2.0/faster_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb'
     odapi = DetectorAPI(path_to_ckpt=model_path)
     threshold = 0.7
-    cap = cv2.VideoCapture("rtsp link or 0 if want from live webcam")
+    cap = cv2.VideoCapture("rtsp://motasim:123456@103.234.26.174:554/user=motasim_password=123456_channel=0_stream=0.sdp")
     while True:
         r, img = cap.read()
         img = cv2.resize(img, (1280, 720))
@@ -69,13 +69,13 @@ if __name__ == "__main__":
         boxes, scores, classes, num = odapi.processFrame(img)
 
         # Visualization of the results of a detection.
-
+        #print(num[0])
         for i in range(len(boxes)):
             # Class 1 represents human
             if classes[i] == 1 and scores[i] > threshold:
                 box = boxes[i]
                 cv2.rectangle(img,(box[1],box[0]),(box[3],box[2]),(255,0,0),2)
-                0
+                #print(len(boxes[i]))
 
 
         cv2.imshow("preview", img)
